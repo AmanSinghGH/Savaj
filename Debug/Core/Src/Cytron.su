@@ -1,0 +1,2 @@
+../Core/Src/Cytron.c:8:6:CytronMotor_Init	24	static
+../Core/Src/Cytron.c:21:6:CytronMotor_Speed	16	static
