@@ -4178,18 +4178,18 @@ Servo_SetAngle(&fatak, 90);   // Move to 90°
  8002810:	601a      	str	r2, [r3, #0]
 //	          CytronMotor_Speed(&shooterM1, -lower_ms);
 //	          CytronMotor_Speed(&shooterM2, (0.82*lower_ms));
-	        	CytronMotor_Speed(&shooterM1,-800);
+	        	CytronMotor_Speed(&shooterM1,-948);
  8002812:	f107 0338 	add.w	r3, r7, #56	@ 0x38
  8002816:	4929      	ldr	r1, [pc, #164]	@ (80028bc <main+0x5cc>)
  8002818:	4618      	mov	r0, r3
  800281a:	f7fe fbf7 	bl	800100c <CytronMotor_Speed>
-				CytronMotor_Speed(&shooterM2,1000);
+				CytronMotor_Speed(&shooterM2,763);
  800281e:	f107 0328 	add.w	r3, r7, #40	@ 0x28
- 8002822:	f44f 717a 	mov.w	r1, #1000	@ 0x3e8
+ 8002822:	f240 21fb 	movw	r1, #763	@ 0x2fb
  8002826:	4618      	mov	r0, r3
  8002828:	f7fe fbf0 	bl	800100c <CytronMotor_Speed>
-	          HAL_Delay(3000);
- 800282c:	f640 30b8 	movw	r0, #3000	@ 0xbb8
+	          HAL_Delay(4000);
+ 800282c:	f44f 607a 	mov.w	r0, #4000	@ 0xfa0
  8002830:	f001 fba8 	bl	8003f84 <HAL_Delay>
 	          if(fatakflag==0)
  8002834:	4b22      	ldr	r3, [pc, #136]	@ (80028c0 <main+0x5d0>)
@@ -4197,9 +4197,9 @@ Servo_SetAngle(&fatak, 90);   // Move to 90°
  8002838:	2b00      	cmp	r3, #0
  800283a:	d15b      	bne.n	80028f4 <main+0x604>
 	          {
-	    	  Servo_SetAngle(&fatak, 30);
+	    	  Servo_SetAngle(&fatak, 32);
  800283c:	463b      	mov	r3, r7
- 800283e:	211e      	movs	r1, #30
+ 800283e:	2120      	movs	r1, #32
  8002840:	4618      	mov	r0, r3
  8002842:	f000 fe79 	bl	8003538 <Servo_SetAngle>
 	    	  fatakflag=1;
@@ -4235,7 +4235,7 @@ Servo_SetAngle(&fatak, 90);   // Move to 90°
  80028b0:	408f4000 	.word	0x408f4000
  80028b4:	200004b8 	.word	0x200004b8
  80028b8:	200004bc 	.word	0x200004bc
- 80028bc:	fffffce0 	.word	0xfffffce0
+ 80028bc:	fffffc4c 	.word	0xfffffc4c
  80028c0:	200004b0 	.word	0x200004b0
 	          }
 

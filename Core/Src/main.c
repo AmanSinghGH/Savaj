@@ -444,12 +444,12 @@ Servo_SetAngle(&fatak, 90);   // Move to 90°
 	        	    lower_ms = (int)lower_motor_speed;
 //	          CytronMotor_Speed(&shooterM1, -lower_ms);
 //	          CytronMotor_Speed(&shooterM2, (0.82*lower_ms));
-	        	CytronMotor_Speed(&shooterM1,-800);
-				CytronMotor_Speed(&shooterM2,1000);
-	          HAL_Delay(3000);
+	        	CytronMotor_Speed(&shooterM1,-948);
+				CytronMotor_Speed(&shooterM2,763);
+	          HAL_Delay(4000);
 	          if(fatakflag==0)
 	          {
-	    	  Servo_SetAngle(&fatak, 30);
+	    	  Servo_SetAngle(&fatak, 32);
 	    	  fatakflag=1;
 	          }
 
