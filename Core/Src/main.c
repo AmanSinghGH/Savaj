@@ -94,7 +94,7 @@ float Kp = 0.2, Ki = 0.0002, Kd = 0.014;                     // Proportional gai
 
 double dx, dy, angle_calc;
 int basket_x = 4000; // Replace with actual values
-int basket_y = 13705;
+int basket_y = 13770;
 
 uint8_t MSG[35] = {'\0'};
 int iX,iY,checkValue;
@@ -135,7 +135,7 @@ int32_t last1, last2, last3;
 float posX = 0.0, posY = 0.0, theta2 = 0.0;
 long last_m1 = 0, last_m2 = 0, last_m3 = 0;
 
-float broadcastAngle = 30;
+int broadcastAngle = 0;
 
 /* USER CODE END PV */
 
@@ -344,7 +344,7 @@ Servo_SetAngle(&fatak, 90);   // Move to 90°
 
 	HAL_Delay(100);  // or timer-based update
 
-  	sprintf(MSG, "%d,%d\n",distance_mm3,distance_mm2);
+  	sprintf(MSG,"%d,%d,%d\n",distance_mm3,7600,broadcastAngle);
  	HAL_UART_Transmit(&huart8, MSG, sizeof(MSG), 100);
 
 	uint32_t currentTick = HAL_GetTick();
@@ -374,7 +374,7 @@ Servo_SetAngle(&fatak, 90);   // Move to 90°
 	        // Normalize heading to [-180, 180]
 	        if (current_heading > 180) current_heading -= 360;
 	        if (current_heading < -180) current_heading += 360;
-
+	        broadcastAngle  = target_heading;
 	        if ((passbtn > 1450 && passbtn <= 1550) && (dribbleturnbtn < 1550 && dribbleturnbtn > 1450) && (basketbtn == 0)) {
 	            target_heading = 0.0;
 	            stateFlagPass = false;
@@ -414,7 +414,8 @@ Servo_SetAngle(&fatak, 90);   // Move to 90°
 	                locked_distance_mm2 = distance_mm2;
 	                stateFlagPass = true;
 	            }
-	            target_heading = broadcastAngle;
+//	            target_heading = broadcastAngle;
+
 
 	        } else if (basketbtn ) {
 	            // Check if the stateFlag is false
@@ -426,12 +427,13 @@ Servo_SetAngle(&fatak, 90);   // Move to 90°
 	            }
 
 	            // Calculate heading using locked values
-	            int dx = basket_x - locked_distance_mm3 ;
-	            int dy = basket_y - locked_distance_mm2 ;
+	            int dx = basket_x - locked_distance_mm3 + 100 ;
+	            int dy = basket_y - 7800;
 	            angle_calc = atan2(dx, dy) * 180.0 / M_PI;
 	            angle_calc = fmod((angle_calc + 360.0), 360.0);
-	            target_heading = angle_calc - 2;
+	            target_heading = angle_calc - 5;
 	            distance_from_basket = sqrt((dx*dx) +(dy*dy));
+		        broadcastAngle  = target_heading;
 	        }
 //	        else {
 //
@@ -440,12 +442,13 @@ Servo_SetAngle(&fatak, 90);   // Move to 90°
 
 	        if(shootbtn==1 )
 	        {
-	        	 lower_motor_speed = 1000 * (1 - pow(M_E, (-0.38 * (distance_from_basket / 1000))));
-	        	    lower_ms = (int)lower_motor_speed;
-//	          CytronMotor_Speed(&shooterM1, -lower_ms);
-//	          CytronMotor_Speed(&shooterM2, (0.82*lower_ms));
-	        	CytronMotor_Speed(&shooterM1,-948);
-				CytronMotor_Speed(&shooterM2,763);
+	          lower_motor_speed = 1000 * (1 - pow(M_E, (-0.39 * (distance_from_basket / 1000))));
+//	       	  lower_motor_speed = 1000 * (1 - pow(M_E, (-0.475 * 6))); //0.48 for 3-4 mtrs
+	          lower_ms = (int)lower_motor_speed;
+	          CytronMotor_Speed(&shooterM1, -lower_ms);
+	          CytronMotor_Speed(&shooterM2, (0.82*lower_ms));
+//	        	CytronMotor_Speed(&shooterM1,-1000);
+//				CytronMotor_Speed(&shooterM2,1000);
 	          HAL_Delay(4000);
 	          if(fatakflag==0)
 	          {
